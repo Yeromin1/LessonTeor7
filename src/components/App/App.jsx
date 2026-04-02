@@ -4,7 +4,7 @@ import { TaskForm } from "../TaskForm/TaskForm";
 import { TaskList } from "../TaskList/TaskList";
 import css from "./App.module.css";
 import { useEffect } from "react";
-import { addTask } from "../../redux/operations";
+import { fetchTasks } from "../../redux/operations";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export default function App() {
   const error = useSelector((state) => state.tasks.error);
 
   useEffect(() => {
-    dispatch(addTask());
+    dispatch(fetchTasks());
   }, [dispatch]);
 
   return (
