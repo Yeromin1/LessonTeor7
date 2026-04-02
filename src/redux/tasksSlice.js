@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchTasks } from "./operations";
+import { addTask, deleteTask } from "./operations";
 
 const tasksSlice = createSlice({
   name: "tasks",
@@ -8,17 +8,33 @@ const tasksSlice = createSlice({
     isLoading: false,
     error: null,
   },
+
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTasks.pending, (state) => {
+      .addCase(addTask.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(fetchTasks.fulfilled, (state, action) => {
+      .addCase(addTask.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.items = action.payload;
+        state.items.push(action.payload);
       })
-      .addCase(fetchTasks.rejected, (state, action) => {
+      .addCase(addTask.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(deleteTask.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = state.items.filter(
+          (task) => task.id !== action.payload.id,
+        );
+      })
+      .addCase(deleteTask.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
