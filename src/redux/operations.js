@@ -44,6 +44,7 @@ export const toggleCompleted = createAsyncThunk(
   async (task, thunkAPI) => {
     try {
       const response = await axios.put(`/tasks/${task.id}`, {
+        ...task,
         completed: !task.completed,
       });
       return response.data;
