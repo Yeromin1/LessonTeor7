@@ -1,6 +1,5 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { addTask, deleteTask, fetchTasks, toggleCompleted } from "./operations";
-import { selectStatusFilter } from "./filterSlice";
 
 const handlePending = (state) => {
   state.isLoading = true;
@@ -59,39 +58,3 @@ const tasksSlice = createSlice({
 });
 
 export default tasksSlice.reducer;
-
-// Selectors
-
-export const selectTasks = (state) => state.tasks.items;
-
-export const selectIsLoading = (state) => state.tasks.isLoading;
-
-export const selectError = (state) => state.tasks.error;
-
-export const selectVisibleTasks = createSelector(
-  [selectTasks, selectStatusFilter],
-  (tasks, statusFilter) => {
-    switch (statusFilter) {
-      case "active":
-        return tasks.filter((task) => !task.completed);
-      case "completed":
-        return tasks.filter((task) => task.completed);
-      default:
-        return tasks;
-    }
-  },
-);
-
-export const selectTaskCount = createSelector([selectTasks], (tasks) => {
-  return tasks.reduce(
-    (count, task) => {
-      if (task.completed) {
-        count.completed += 1;
-      } else {
-        count.active += 1;
-      }
-      return count;
-    },
-    { active: 0, completed: 0 },
-  );
-});
