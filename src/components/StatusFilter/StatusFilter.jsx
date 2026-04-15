@@ -5,31 +5,25 @@ import { Button } from "../Button/Button";
 
 export const StatusFilter = () => {
   const dispatch = useDispatch();
-
   const filter = useSelector(selectStatusFilter);
 
-  const handleFilterChange = (filter) => dispatch(setStatusFilter(filter));
+  const handleFilterChange = (value) => {
+    dispatch(setStatusFilter(value));
+  };
+
+  const filters = ["all", "active", "completed"];
 
   return (
     <div className={css.wrapper}>
-      <Button
-        selected={filter === "all"}
-        onClick={() => handleFilterChange("all")}
-      >
-        All
-      </Button>
-      <Button
-        selected={filter === "active"}
-        onClick={() => handleFilterChange("active")}
-      >
-        Active
-      </Button>
-      <Button
-        selected={filter === "completed"}
-        onClick={() => handleFilterChange("completed")}
-      >
-        Completed
-      </Button>
+      {filters.map((item) => (
+        <Button
+          key={item}
+          selected={filter === item}
+          onClick={() => handleFilterChange(item)}
+        >
+          {item}
+        </Button>
+      ))}
     </div>
   );
 };

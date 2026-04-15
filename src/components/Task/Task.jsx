@@ -14,7 +14,7 @@ export const Task = ({ task }) => {
       <input
         type="checkbox"
         className={css.checkbox}
-        checked={task.completed}
+        checked={task.completed || false}
         onChange={handleToggle}
       />
       <p>{task.text}</p>
