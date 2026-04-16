@@ -9,16 +9,22 @@ const buildLinkClass = ({ isActive }) => {
 const Header = () => {
   return (
     <header>
-      <h2>Header authorization</h2>
+      <h2 className={s.title}>Authorization</h2>
       <nav>
         <NavLink to="/" className={buildLinkClass}>
           Home
         </NavLink>
-        <NavLink to="/articles" className={buildLinkClass}>
+        <NavLink to="/articles" end className={buildLinkClass}>
           Articles
         </NavLink>
         <NavLink to="/articles/add" className={buildLinkClass}>
           Add article
+        </NavLink>
+        <NavLink to="/login" className={buildLinkClass}>
+          Login
+        </NavLink>
+        <NavLink to="/register" className={buildLinkClass}>
+          Register
         </NavLink>
       </nav>
     </header>
