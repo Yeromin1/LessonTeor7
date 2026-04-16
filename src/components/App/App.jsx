@@ -1,28 +1,24 @@
-import { useDispatch, useSelector } from "react-redux";
-import { AppBar } from "../AppBar/AppBar";
-import { TaskForm } from "../TaskForm/TaskForm";
-import { TaskList } from "../TaskList/TaskList";
-import css from "./App.module.css";
-import { useEffect } from "react";
-import { fetchTasks } from "../../redux/operations";
-import { selectError, selectIsLoading } from "../../redux/selectors";
+import { lazy } from "react";
+import { Route, Routes } from "react-router-dom";
+
+const Home = lazy(() => import("../pages/Home/Home.jsx"));
+const Articles = lazy(() => import("../pages/Articles/Articles.jsx"));
+const AddArticles = lazy(() => import("../pages/AddArticles/AddArticles.jsx"));
+const NotFound = lazy(() => import("../pages/NotFound/NotFound.jsx"));
+const SingleArticle = lazy(
+  () => import("../pages/SingleArticles/SingleArticles.jsx"),
+);
 
 export default function App() {
-  const dispatch = useDispatch();
-
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-
-  useEffect(() => {
-    dispatch(fetchTasks());
-  }, [dispatch]);
-
   return (
-    <div className={css.container}>
-      <AppBar />
-      <TaskForm />
-      {isLoading && !error && <b>Request in progress...</b>}
-      <TaskList />
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/articles" element={<Articles />} />
+        <Route path="/articles/:articlesId" element={<SingleArticle />} />
+        <Route path="/articles/add" element={<AddArticles />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }
