@@ -1,4 +1,6 @@
 import { Field, Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../../redux/authOperations";
 
 const LoginForm = () => {
   const initialValues = {
@@ -6,8 +8,11 @@ const LoginForm = () => {
     password: "",
   };
 
+  const dispatch = useDispatch();
+
   const handleSubmit = (values) => {
     console.log(values);
+    dispatch(loginThunk(values));
   };
 
   return (
